@@ -8,7 +8,7 @@ RUN apk update && apk add --no-cache --virtual .build-deps curl \
     && apk del .build-deps && rm -rf /var/cache/apk/* \
     && adduser -D datanymizer
 
-COPY ["docker-entrypoint.sh", "/usr/bin/"]
+COPY ["docker-entrypoint.sh", "/usr/local/bin"]
 
 USER 1000
 
