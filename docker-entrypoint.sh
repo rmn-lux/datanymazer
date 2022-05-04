@@ -45,7 +45,7 @@ env
 ls -l /etc/datanymazer || true
 cat /etc/datanymazer/dvdrental.yml || true
 
-tailf -f /dev/null
+tail -f /dev/null
 
 # check connections and vars
 check_empty_vars
