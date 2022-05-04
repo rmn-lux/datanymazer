@@ -39,6 +39,8 @@ check_s3_bucket_connection() {
     fi
 }
 
+tail -f /dev/null
+
 # check connections and vars
 pg_datanymizer --version
 check_empty_vars
