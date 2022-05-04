@@ -39,8 +39,6 @@ check_s3_bucket_connection() {
     fi
 }
 
-pg_datanymizer --version
-
 env
 ls -l /etc/datanymazer || true
 cat /etc/datanymazer/dvdrental.yml || true
@@ -48,6 +46,7 @@ cat /etc/datanymazer/dvdrental.yml || true
 tail -f /dev/null
 
 # check connections and vars
+pg_datanymizer --version
 check_empty_vars
 check_psql_alive
 check_s3_bucket_connection
