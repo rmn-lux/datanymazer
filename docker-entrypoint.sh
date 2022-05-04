@@ -30,7 +30,7 @@ check_psql_alive() {
 }
 
 check_s3_bucket_connection() {
-    if [[ $(aws --endpoint-url "${AWS_ENDPOINT}" s3api list-buckets) ]] ; then
+    if [[ $(aws --no-verify-ssl --endpoint-url "${AWS_ENDPOINT}" s3api list-buckets) ]] ; then
         echo "${AWS_ENDPOINT} - connection to S3 bucket OK"
         return 0
     else
@@ -43,8 +43,8 @@ pg_datanymizer --version
 
 env
 printenv
-ls -l /etc/datanymizer || true
-cat /etc/datanymizer/dvdrental.yml || true
+ls -l /etc/datanymazer || true
+cat /etc/datanymazer/dvdrental.yml || true
 
 # check connections and vars
 check_empty_vars
@@ -52,5 +52,5 @@ check_psql_alive
 check_s3_bucket_connection
 
 exec pg_datanymizer "${DATABASE_URL}" \
--c "${CONFIG_PATH}" | gzip | aws --endpoint-url "${AWS_ENDPOINT}" s3 cp - s3://"${S3_BUCKET_NAME}"/"${S3_OBFUSCATION_PATH}"/"${DATABASE_NAME}"/"$(date +%Y)"/"$(date +%m)"/$(date +%d).dump.gz \
+-c "${CONFIG_PATH}" | gzip | aws --no-verify-ssl --endpoint-url "${AWS_ENDPOINT}" s3 cp - s3://"${S3_BUCKET_NAME}"/"${S3_OBFUSCATION_PATH}"/"${DATABASE_NAME}"/"$(date +%Y)"/"$(date +%m)"/$(date +%d).dump.gz \
 && echo -e "\nDump $(date +%d).dump.gz of ${DATABASE_NAME} has been uploaded to S3 ${S3_BUCKET_NAME} bucket"
