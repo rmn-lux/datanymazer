@@ -18,9 +18,10 @@ jobs:
       run: docker build . --file Dockerfile --build-arg PG_DATANYMIZER_VERSION=v0.5.1 --tag my-image-name:$(date +%s)
 
     -
-        name: Login to DockerHub
+        name: Login to ghcr
         uses: docker/login-action@v1
         with:
+          registry: ghcr.io
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
     -
